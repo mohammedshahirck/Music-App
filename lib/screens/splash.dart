@@ -1,6 +1,7 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:musicplayer/widget/bottom_nav.dart';
-import 'package:musicplayer/widget/const.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -22,32 +23,22 @@ class _SplashScreenState extends State<SplashScreen> {
         backgroundColor: const Color.fromARGB(255, 28, 12, 55),
         body: SafeArea(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  Padding(
-                    padding: EdgeInsets.only(top: 140),
-                    child: Text('MUSIQAA',
-                        style: TextStyle(
-                            fontSize: 30,
-                            color: Color.fromARGB(255, 221, 160, 69))),
+                children: [
+                  Container(
+                    height: 300,
+                    width: 250,
+                    decoration: BoxDecoration(
+                      image: const DecorationImage(
+                          image: AssetImage('assets/images/musiqaa.png')),
+                      borderRadius: BorderRadius.circular(50),
+                    ),
                   ),
                 ],
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 0),
-                child: ClipRRect(
-                  borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(90),
-                      topRight: Radius.circular(90)),
-                  child: Image.asset(
-                    subimgw,
-                    height: 400,
-                  ),
-                ),
-              ),
+              )
             ],
           ),
         ));

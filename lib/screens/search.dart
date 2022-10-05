@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:musicplayer/screens/all_music.dart';
+import 'package:musicplayer/screens/now_playing.dart';
+import 'package:musicplayer/widget/music_store.dart';
+import 'package:on_audio_query/on_audio_query.dart';
+
+ValueNotifier<List<SongModel>> temp = ValueNotifier([]);
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -8,6 +14,45 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
+  final OnAudioQuery _audioQuery = OnAudioQuery();
+
+  late List<SongModel> _allSongs;
+  List<SongModel> _getedSongs = [];
+
+  void loadAllSongList() async {
+    _allSongs = await _audioQuery.querySongs(
+      sortType: null,
+      orderType: OrderType.ASC_OR_SMALLER,
+      uriType: UriType.EXTERNAL,
+      ignoreCase: true,
+    );
+    _getedSongs = _allSongs;
+  }
+
+  void search(String typedKeyword) {
+    List<SongModel> results = [];
+    if (typedKeyword.isEmpty) {
+      results = _allSongs;
+    } else {
+      results = _allSongs
+          .where(
+            (element) => element.title.toLowerCase().contains(
+                  typedKeyword.toLowerCase(),
+                ),
+          )
+          .toList();
+    }
+    setState(() {
+      _getedSongs = results;
+    });
+  }
+
+  @override
+  void initState() {
+    loadAllSongList();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,8 +79,10 @@ class _SearchScreenState extends State<SearchScreen> {
             Padding(
               padding: const EdgeInsets.all(18.0),
               child: TextField(
+                onChanged: (String value) => search(value),
                 style: const TextStyle(color: Color.fromARGB(255, 5, 31, 53)),
                 decoration: InputDecoration(
+                  hintText: 'Search',
                   fillColor: const Color.fromARGB(255, 215, 214, 215),
                   filled: true,
                   border: OutlineInputBorder(
@@ -49,65 +96,60 @@ class _SearchScreenState extends State<SearchScreen> {
                 ),
               ),
             ),
-            // Padding(
-            //   padding: const EdgeInsets.only(left: 18),
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //     children: [
-            //       const Text(
-            //         'Recently',
-            //         style: TextStyle(fontSize: 20),
-            //       ),
-            //       IconButton(
-            //         onPressed: () {},
-            //         icon: const Icon(
-            //           Icons.arrow_forward_ios,
-            //           size: 20,
-            //         ),
-            //       )
-            //     ],
-            //   ),
-            // ),
-            // Container(
-            //   padding: const EdgeInsets.only(
-            //     left: 10,
-            //   ),
-            //   height: 150,
-            //   child: GridView.builder(
-            //     itemCount: images.length,
-            //     scrollDirection: Axis.horizontal,
-            //     itemBuilder: (
-            //       BuildContext context,
-            //       index,
-            //     ) =>
-            //         Container(
-            //       width: 150,
-            //       margin: const EdgeInsets.all(
-            //         5,
-            //       ),
-            //       decoration: BoxDecoration(
-            //         image: DecorationImage(
-            //           image: AssetImage(
-            //             images[index],
-            //           ),
-            //           fit: BoxFit.fill,
-            //         ),
-            //         borderRadius: BorderRadius.circular(
-            //           20,
-            //         ),
-            //         color: Colors.blue,
-            //       ),
-            //       child: const Center(
-            //         child: Icon(
-            //           Icons.music_note,
-            //         ),
-            //       ),
-            //     ),
-            //     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            //       crossAxisCount: 1,
-            //     ),
-            //   ),
-            // ),
+            (_getedSongs.isEmpty)
+                ? Container()
+                : Expanded(
+                    child: ListView.builder(
+                      itemCount: _getedSongs.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return ListTile(
+                          leading: QueryArtworkWidget(
+                            id: _getedSongs[index].id,
+                            type: ArtworkType.AUDIO,
+                            nullArtworkWidget: Container(
+                              height: MediaQuery.of(context).size.height * 0.35,
+                              width: MediaQuery.of(context).size.width * 0.15,
+                              decoration: BoxDecoration(
+                                gradient: const LinearGradient(
+                                  colors: [
+                                    Colors.blueGrey,
+                                    Colors.white,
+                                    Colors.black
+                                  ],
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                ),
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: Icon(
+                                Icons.music_note_rounded,
+                                color: Colors.blueGrey[600],
+                              ),
+                            ),
+                          ),
+                          title: Text(
+                            _getedSongs[index].title,
+                          ),
+                          subtitle: Text(
+                            "${_getedSongs[index].artist}",
+                            maxLines: 1,
+                          ),
+                          onTap: () {
+                            _getedSongs;
+                            FocusScope.of(context).unfocus();
+                            MusicStore.player.setAudioSource(
+                              MusicStore.createSongList(AllMusic.song),
+                              initialIndex: index,
+                            );
+                            MusicStore.player.play();
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) =>
+                                    NowPlaying(playerSong: AllMusic.song)));
+                          },
+                        );
+                      },
+                    ),
+                  ),
           ],
         ),
       ),

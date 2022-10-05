@@ -7,10 +7,10 @@ class Settings extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        surfaceTintColor: Colors.blueGrey[900],
         elevation: 0,
         title: const Padding(
-          padding: EdgeInsets.only(left: 50),
+          padding: EdgeInsets.only(left: 70),
           child: Text(
             'Settings',
             style:

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:musicplayer/screens/home_screen.dart';
-import 'package:musicplayer/screens/music_library.dart';
+import 'package:musicplayer/database/favorite_db.dart';
+import 'package:musicplayer/screens/home/home_screen.dart';
+import 'package:musicplayer/screens/PlayList/playlist.dart';
 import 'package:musicplayer/screens/search.dart';
-import 'package:musicplayer/screens/music_list.dart';
+import 'package:musicplayer/screens/all_music.dart';
 
 class ScreenHome extends StatefulWidget {
   const ScreenHome({Key? key}) : super(key: key);
@@ -15,9 +16,9 @@ class _ScreenHomeState extends State<ScreenHome> {
   int index = 0;
   final screens = const [
     HomeScreen(),
-    ListViewMusic(),
+    AllMusic(),
     SearchScreen(),
-    MusicLibrary(),
+    PlayList(),
   ];
 
   @override
@@ -25,9 +26,6 @@ class _ScreenHomeState extends State<ScreenHome> {
     return Scaffold(
       body: screens[index],
       backgroundColor: Colors.white,
-      //  const Color.fromARGB(255, 219, 215, 254),
-      // Color.fromARGB(255, 229, 241, 251),
-
       bottomNavigationBar: NavigationBarTheme(
         data: NavigationBarThemeData(
           indicatorColor: Colors.blueGrey[800],
@@ -43,7 +41,14 @@ class _ScreenHomeState extends State<ScreenHome> {
           selectedIndex: index,
           backgroundColor: Colors.transparent,
           animationDuration: const Duration(seconds: 2),
-          onDestinationSelected: (index) => setState(() => this.index = index),
+          onDestinationSelected: (index) =>
+              // setState(
+              //   () => this.index = index,
+              // ),
+              setState(() {
+            this.index = index;
+            FavoriteDB.favoriteSongs.notifyListeners();
+          }),
           destinations: const [
             NavigationDestination(
               icon: Icon(
@@ -77,13 +82,13 @@ class _ScreenHomeState extends State<ScreenHome> {
             ),
             NavigationDestination(
               icon: Icon(
-                Icons.library_music_outlined,
+                Icons.playlist_play,
               ),
               selectedIcon: Icon(
-                Icons.library_music,
+                Icons.playlist_play_outlined,
                 color: Color.fromARGB(255, 221, 221, 221),
               ),
-              label: 'Library',
+              label: 'Playlist',
             ),
           ],
         ),
