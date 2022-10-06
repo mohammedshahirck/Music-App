@@ -13,6 +13,12 @@ class Favorites extends StatefulWidget {
 
 class _FavoritesState extends State<Favorites> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
         valueListenable: FavoriteDB.favoriteSongs,
@@ -52,94 +58,97 @@ class _FavoritesState extends State<Favorites> {
                     ))
                   : ListView(
                       children: [
-                        ValueListenableBuilder(
-                          valueListenable: FavoriteDB.favoriteSongs,
-                          builder: (BuildContext ctx, List<SongModel> favorData,
-                              Widget? child) {
-                            return ListView.separated(
-                                shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
-                                scrollDirection: Axis.vertical,
-                                itemBuilder: (ctx, index) {
-                                  return ListTile(
-                                    onTap: () {
-                                      MusicStore.player.stop();
-                                      MusicStore.player.setAudioSource(
-                                          MusicStore.createSongList(favorData),
-                                          initialIndex: index);
-                                      MusicStore.player.play();
-                                      Navigator.of(context).push(
-                                        MaterialPageRoute(builder: (ctx) {
-                                          return NowPlaying(
-                                            playerSong: favorData,
-                                          );
-                                        }),
-                                      );
-                                    },
-                                    leading: QueryArtworkWidget(
-                                      id: favorData[index].id,
-                                      type: ArtworkType.AUDIO,
-                                      nullArtworkWidget: CircleAvatar(
-                                        backgroundColor: Colors.black,
-                                        radius: MediaQuery.of(context)
-                                                .size
-                                                .aspectRatio *
-                                            60,
-                                        child: CircleAvatar(
-                                          backgroundColor: Colors.grey[300],
+                        FutureBuilder(builder: (context, item) {
+                          return ValueListenableBuilder(
+                            valueListenable: FavoriteDB.favoriteSongs,
+                            builder: (BuildContext ctx,
+                                List<SongModel> favorData, Widget? child) {
+                              return ListView.separated(
+                                  shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  scrollDirection: Axis.vertical,
+                                  itemBuilder: (ctx, index) {
+                                    return ListTile(
+                                      onTap: () {
+                                        MusicStore.player.stop();
+                                        MusicStore.player.setAudioSource(
+                                            MusicStore.createSongList(
+                                                favorData),
+                                            initialIndex: index);
+                                        MusicStore.player.play();
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(builder: (ctx) {
+                                            return NowPlaying(
+                                              playerSong: favorData,
+                                            );
+                                          }),
+                                        );
+                                      },
+                                      leading: QueryArtworkWidget(
+                                        id: favorData[index].id,
+                                        type: ArtworkType.AUDIO,
+                                        nullArtworkWidget: CircleAvatar(
+                                          backgroundColor: Colors.black,
                                           radius: MediaQuery.of(context)
                                                   .size
                                                   .aspectRatio *
-                                              40,
+                                              60,
                                           child: CircleAvatar(
-                                            backgroundColor: Colors.black,
+                                            backgroundColor: Colors.grey[300],
                                             radius: MediaQuery.of(context)
                                                     .size
                                                     .aspectRatio *
-                                                90,
-                                            child: Icon(
-                                              Icons.music_note_rounded,
-                                              size: 60,
-                                              color: Colors.grey[300],
+                                                40,
+                                            child: CircleAvatar(
+                                              backgroundColor: Colors.black,
+                                              radius: MediaQuery.of(context)
+                                                      .size
+                                                      .aspectRatio *
+                                                  90,
+                                              child: Icon(
+                                                Icons.music_note_rounded,
+                                                size: 60,
+                                                color: Colors.grey[300],
+                                              ),
                                             ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    title: Text(
-                                      favorData[index].displayNameWOExt,
-                                      maxLines: 1,
-                                      overflow: TextOverflow.fade,
-                                      style: const TextStyle(
-                                          color: Colors.black, fontSize: 15),
-                                    ),
-                                    subtitle: Text(
-                                      favorData[index].artist.toString(),
-                                      maxLines: 1,
-                                      overflow: TextOverflow.fade,
-                                      style:
-                                          const TextStyle(color: Colors.black),
-                                    ),
-                                    trailing: IconButton(
-                                        onPressed: () {
-                                          FavoriteDB.favoriteSongs
-                                              .notifyListeners();
-                                          FavoriteDB.delete(
-                                              favorData[index].id);
-                                        },
-                                        icon: const Icon(
-                                          Icons.delete_sweep,
-                                          color: Colors.red,
-                                          size: 30,
-                                        )),
-                                  );
-                                },
-                                separatorBuilder: (ctx, index) {
-                                  return const Divider();
-                                },
-                                itemCount: favorData.length);
-                          },
-                        ),
+                                      title: Text(
+                                        favorData[index].displayNameWOExt,
+                                        maxLines: 1,
+                                        overflow: TextOverflow.fade,
+                                        style: const TextStyle(
+                                            color: Colors.black, fontSize: 15),
+                                      ),
+                                      subtitle: Text(
+                                        favorData[index].artist.toString(),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.fade,
+                                        style: const TextStyle(
+                                            color: Colors.black),
+                                      ),
+                                      trailing: IconButton(
+                                          onPressed: () {
+                                            FavoriteDB.favoriteSongs
+                                                .notifyListeners();
+                                            FavoriteDB.delete(
+                                                favorData[index].id);
+                                          },
+                                          icon: const Icon(
+                                            Icons.delete_sweep,
+                                            color: Colors.red,
+                                            size: 30,
+                                          )),
+                                    );
+                                  },
+                                  separatorBuilder: (ctx, index) {
+                                    return const Divider();
+                                  },
+                                  itemCount: favorData.length);
+                            },
+                          );
+                        }),
                       ],
                     ),
             ),

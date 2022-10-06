@@ -19,8 +19,6 @@ class _NowPlayingState extends State<NowPlaying> {
   bool _isPlaying = true;
   int currentIndex = 0;
 
-  bool _isshuffle = true;
-
   @override
   void initState() {
     MusicStore.player.currentIndexStream.listen((index) {
@@ -80,6 +78,7 @@ class _NowPlayingState extends State<NowPlaying> {
               borderRadius: BorderRadius.circular(20),
             ),
             child: QueryArtworkWidget(
+              quality: 100,
               artworkFit: BoxFit.fill,
               keepOldArtwork: true,
               artworkBorder: BorderRadius.circular(20),
@@ -122,7 +121,7 @@ class _NowPlayingState extends State<NowPlaying> {
           Text(
             textAlign: TextAlign.center,
             maxLines: 1,
-            widget.playerSong[currentIndex].displayNameWOExt,
+            widget.playerSong[currentIndex].title,
             style: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,

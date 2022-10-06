@@ -27,6 +27,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  carousel_slider: ^4.1.1
   cupertino_icons: ^1.0.2
   flutter:
     sdk: flutter
@@ -40,6 +41,7 @@ dependencies:
   on_audio_query: ^2.6.1
   permission_handler: ^10.0.0
   restart_app: ^1.1.0+1
+  rxdart: ^0.27.5
 dev_dependencies:
   bottom_navigation_bar: ^1.0.1
   build_runner: ^2.2.1

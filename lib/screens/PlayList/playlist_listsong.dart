@@ -103,7 +103,7 @@ class _SongListState extends State<SongList> {
                               setState(() {
                                 playlistCheck(item.data![index]);
 
-                                playlistNotifier.notifyListeners();
+                                PlaylistDB.playlistNotifier.notifyListeners();
                               });
                             },
                             icon:

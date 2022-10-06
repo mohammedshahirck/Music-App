@@ -4,9 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:hive/hive.dart';
 import 'package:musicplayer/model/music_player_model.dart';
 
-ValueNotifier<List<MusicPlayer>> playlistNotifier = ValueNotifier([]);
-
 class PlaylistDB {
+  static ValueNotifier<List<MusicPlayer>> playlistNotifier = ValueNotifier([]);
   static Future<void> addPlaylist(MusicPlayer value) async {
     final playlistDb = Hive.box<MusicPlayer>('playlistDB');
     playlistNotifier.value.add(value);

@@ -5,23 +5,24 @@ import 'package:musicplayer/screens/all_music.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
 class RecentSongsController {
-  ValueNotifier<List<SongModel>> recentsNotifier = ValueNotifier([]);
-  List<dynamic> recentPlayed = [];
-  addRecentlyPlayed(item) async {
+  static ValueNotifier<List<SongModel>> recentsNotifier = ValueNotifier([]);
+  static List<dynamic> recentPlayed = [];
+
+  static Future<void> addRecentlyPlayed(item) async {
     final dbBox = await Hive.openBox('recentsNotifier');
     await dbBox.add(item);
     getRecentSongs();
+    recentsNotifier.notifyListeners();
   }
 
-  getRecentSongs() async {
+  static Future<void> getRecentSongs() async {
     final dbBox = await Hive.openBox('recentsNotifier');
     recentPlayed = dbBox.values.toList();
-
     displayRecents();
-    // recentsNotifier.notifyListeners();
+    recentsNotifier.notifyListeners();
   }
 
-  displayRecents() async {
+  static Future<void> displayRecents() async {
     final dbBox = await Hive.openBox('recentsNotifier');
     final recentsItems = dbBox.values.toList();
     recentsNotifier.value.clear();
