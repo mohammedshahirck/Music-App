@@ -6,8 +6,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:musicplayer/database/favorite_db.dart';
 import 'package:musicplayer/database/recent_songs_db.dart';
 import 'package:musicplayer/screens/all_music.dart';
-import 'package:musicplayer/screens/favorites/favorites.dart';
-import 'package:musicplayer/screens/home/carosal_list.dart';
 import 'package:musicplayer/screens/home/home_function.dart';
 import 'package:musicplayer/screens/now_playing.dart';
 import 'package:musicplayer/screens/settings.dart';

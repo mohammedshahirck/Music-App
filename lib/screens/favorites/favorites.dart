@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:musicplayer/database/favorite_db.dart';
+import 'package:musicplayer/database/recent_songs_db.dart';
 import 'package:musicplayer/widget/music_store.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import '../now_playing.dart';
@@ -70,6 +71,8 @@ class _FavoritesState extends State<Favorites> {
                                   itemBuilder: (ctx, index) {
                                     return ListTile(
                                       onTap: () {
+                                        RecentSongsController.addRecentlyPlayed(
+                                            FavoriteDB.favoriteSongs);
                                         MusicStore.player.stop();
                                         MusicStore.player.setAudioSource(
                                             MusicStore.createSongList(

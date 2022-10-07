@@ -72,8 +72,8 @@ class _NowPlayingState extends State<NowPlaying> {
             height: 50,
           ),
           Container(
-            height: MediaQuery.of(context).size.height * 0.4,
-            width: MediaQuery.of(context).size.width * .75,
+            height: MediaQuery.of(context).size.height * 0.3,
+            width: MediaQuery.of(context).size.width * .65,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
             ),
@@ -115,8 +115,8 @@ class _NowPlayingState extends State<NowPlaying> {
               ),
             ),
           ),
-          const SizedBox(
-            height: 30,
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.09,
           ),
           Text(
             textAlign: TextAlign.center,
@@ -291,7 +291,7 @@ class _NowPlayingState extends State<NowPlaying> {
             ),
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height * .04,
+            height: MediaQuery.of(context).size.height * .01,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,

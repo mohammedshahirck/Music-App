@@ -1,14 +1,9 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:musicplayer/database/favorite_db.dart';
 import 'package:musicplayer/database/recent_songs_db.dart';
-import 'package:musicplayer/screens/favorites/favorites.dart';
-import 'package:musicplayer/screens/home/home_screen.dart';
 import 'package:musicplayer/screens/now_playing.dart';
 import 'package:musicplayer/widget/favoritebutton.dart';
 import 'package:musicplayer/widget/music_store.dart';
 import 'package:on_audio_query/on_audio_query.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 class AllMusic extends StatefulWidget {
   const AllMusic({Key? key}) : super(key: key);
@@ -19,33 +14,6 @@ class AllMusic extends StatefulWidget {
 }
 
 class _AllMusicState extends State<AllMusic> {
-  // @override
-  // void initState() {
-  //   requestPermission();
-  //   init();
-  //   super.initState();
-  // }
-
-  // void requestPermission() async {
-  //   if (!kIsWeb) {
-  //     bool permissionStatus = await _audioQuery.permissionsStatus();
-  //     if (!permissionStatus) {
-  //       await _audioQuery.permissionsRequest();
-  //     }
-  //     setState(() {});
-  //   }
-  //   Permission.storage.request();
-  // }
-
-  // Future init() async {
-  //   await Permission.storage.request();
-  //   const HomeScreen();
-  //   // await getAllPlaylist();
-  //   await RecentSongsController.displayRecents();
-  //   // await FavoriteDB.getAllSongs();
-  //   const Favorites();
-  // }
-
   final OnAudioQuery _audioQuery = OnAudioQuery();
 
   @override
@@ -86,12 +54,6 @@ class _AllMusicState extends State<AllMusic> {
               );
             }
 
-            // AllMusic.song = item.data!;
-
-            // if (!FavoriteDB.isInitialized) {
-            //   FavoriteDB.initialize(item.data!);
-            // }
-            // MusicStore.songCopy = item.data!;
             return ListView.builder(
               itemCount: item.data!.length,
               shrinkWrap: true,
