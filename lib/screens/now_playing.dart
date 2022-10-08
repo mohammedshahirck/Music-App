@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:musicplayer/database/favorite_db.dart';
 import 'package:musicplayer/widget/favoritebutton.dart';
 import 'package:musicplayer/widget/music_store.dart';
 import 'package:on_audio_query/on_audio_query.dart';
@@ -60,6 +61,7 @@ class _NowPlayingState extends State<NowPlaying> {
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
+            FavoriteDB.favoriteSongs.notifyListeners();
           },
           icon: const Icon(Icons.arrow_back_ios_new),
         ),
@@ -238,24 +240,36 @@ class _NowPlayingState extends State<NowPlaying> {
                   ),
                 ),
                 RawMaterialButton(
-                  onPressed: () {
-                    setState(() {
-                      if (_isPlaying) {
-                        MusicStore.player.pause();
-                      } else {
-                        MusicStore.player.play();
-                      }
-                      _isPlaying = !_isPlaying;
+                  onPressed: () async {
+                    if (_isPlaying) {
                       setState(() {});
-                    });
+                      MusicStore.player.pause();
+                    } else {
+                      MusicStore.player.play();
+                    }
+                    _isPlaying = !_isPlaying;
+                    setState(() {});
                   },
                   elevation: 5.0,
                   fillColor: Colors.blueGrey[300],
                   padding: const EdgeInsets.all(15.0),
                   shape: const CircleBorder(),
-                  child: Icon(
-                    _isPlaying ? Icons.pause : Icons.play_arrow,
-                    size: 35.0,
+                  child: StreamBuilder<bool>(
+                    stream: MusicStore.player.playingStream,
+                    builder: (context, snapshot) {
+                      bool? playingStage = snapshot.data;
+                      if (playingStage != null && playingStage) {
+                        return const Icon(
+                          Icons.pause,
+                          size: 35,
+                        );
+                      } else {
+                        return const Icon(
+                          Icons.play_arrow,
+                          size: 35,
+                        );
+                      }
+                    },
                   ),
                 ),
                 RawMaterialButton(
@@ -282,7 +296,7 @@ class _NowPlayingState extends State<NowPlaying> {
                     elevation: 0,
                   ),
                   onPressed: () {},
-                  child: Icon(
+                  child: const Icon(
                     Icons.shuffle,
                     color: Colors.black,
                   ),

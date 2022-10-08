@@ -1,8 +1,11 @@
 // ignore_for_file: prefer_const_constructors_in_immutables
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:musicplayer/database/favorite_db.dart';
 import 'package:musicplayer/database/playlist_db.dart';
+import 'package:musicplayer/screens/PlayList/playlist.dart';
 import 'package:musicplayer/screens/PlayList/playlist_song.dart';
+import 'package:musicplayer/screens/home/home_screen.dart';
 import '../../model/music_player_model.dart';
 
 class PlayListScreen extends StatefulWidget {
@@ -20,6 +23,7 @@ final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 class _PlayListScreenState extends State<PlayListScreen> {
   @override
   Widget build(BuildContext context) {
+    FavoriteDB.favoriteSongs.notifyListeners;
     return ValueListenableBuilder(
         valueListenable: Hive.box<MusicPlayer>('playlistDB').listenable(),
         builder:
@@ -36,6 +40,12 @@ class _PlayListScreenState extends State<PlayListScreen> {
               leading: IconButton(
                   onPressed: () {
                     Navigator.pop(context);
+                    FavoriteDB.favoriteSongs.notifyListeners;
+                    // Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //       builder: (context) => PlayList(),
+                    //     ));
                   },
                   icon: const Icon(Icons.arrow_back_ios)),
             ),
@@ -186,27 +196,16 @@ class _PlayListScreenState extends State<PlayListScreen> {
                                         actions: <Widget>[
                                           TextButton(
                                             onPressed: () {
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: ((context) =>
-                                                      PlayListScreen()),
-                                                ),
-                                              );
+                                              Navigator.pop(context);
                                             },
                                             child: const Text('No'),
                                           ),
                                           TextButton(
                                               onPressed: () {
-                                                musicList.deleteAt(index);
-                                                Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) {
-                                                      return PlayListScreen();
-                                                    },
-                                                  ),
-                                                );
+                                                setState(() {
+                                                  musicList.deleteAt(index);
+                                                });
+                                                Navigator.pop(context);
                                               },
                                               child: const Text('yes')),
                                         ],

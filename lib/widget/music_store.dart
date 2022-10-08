@@ -14,10 +14,10 @@ class MusicStore {
       sources.add(
         AudioSource.uri(Uri.parse(song.uri!),
             tag: MediaItem(
-              id: song.id.toString(),
-              album: song.album,
-              title: song.title,
-            )),
+                id: song.id.toString(),
+                album: song.album,
+                title: song.title,
+                artist: song.artist)),
       );
     }
     return ConcatenatingAudioSource(children: sources);
