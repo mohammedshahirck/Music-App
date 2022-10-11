@@ -1,42 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:musicplayer/database/favorite_db.dart';
+import 'package:lottie/lottie.dart';
 import 'package:musicplayer/database/recent_songs_db.dart';
 import 'package:musicplayer/screens/now_playing.dart';
 import 'package:musicplayer/widget/music_store.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
-class HomeAlbum extends StatefulWidget {
-  const HomeAlbum({super.key});
-
-  @override
-  State<HomeAlbum> createState() => _HomeAlbumState();
-}
-
-class _HomeAlbumState extends State<HomeAlbum> {
-  @override
-  Widget build(BuildContext context) {
-    return const SizedBox();
-  }
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-class HomeArtist extends StatefulWidget {
-  const HomeArtist({super.key});
-
-  @override
-  State<HomeArtist> createState() => _HomeArtistState();
-}
-
-class _HomeArtistState extends State<HomeArtist> {
-  @override
-  Widget build(BuildContext context) {
-    return const SizedBox();
-  }
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 class HomeRecentsSongs extends StatefulWidget {
   const HomeRecentsSongs({Key? key}) : super(key: key);
 
@@ -50,6 +18,12 @@ class _HomeRecentsSongsState extends State<HomeRecentsSongs> {
   @override
   void initState() {
     super.initState();
+    init();
+    setState(() {});
+  }
+
+  Future init() async {
+    await RecentSongsController.recentPlayed;
     setState(() {});
   }
 
@@ -59,19 +33,15 @@ class _HomeRecentsSongsState extends State<HomeRecentsSongs> {
       child: SizedBox(
         height: MediaQuery.of(context).size.height * 0.2,
         child: FutureBuilder(
-          future: RecentSongsController.displayRecents(),
+          future: RecentSongsController.getRecentSongs(),
           builder: (context, items) {
             return ValueListenableBuilder(
               valueListenable: RecentSongsController.recentsNotifier,
               builder: (BuildContext context, List<SongModel> recentValue,
                   Widget? child) {
                 if (recentValue.isEmpty) {
-                  return const Center(
-                    child: Text(
-                      'No Song Played ',
-                      style: TextStyle(fontSize: 15),
-                    ),
-                  );
+                  return Lottie.asset('assets/images/play.json',
+                      height: 89, width: 100);
                 } else {
                   final temp = recentValue.reversed.toList();
                   removedup = temp.toSet().toList();
@@ -87,7 +57,7 @@ class _HomeRecentsSongsState extends State<HomeRecentsSongs> {
                         if (item.data == null) {
                           return const Center(
                             child: CircularProgressIndicator(
-                              color: Colors.white,
+                              color: Colors.black,
                             ),
                           );
                         }
@@ -102,11 +72,9 @@ class _HomeRecentsSongsState extends State<HomeRecentsSongs> {
                               removedup.length > 10 ? 10 : removedup.length,
                           itemBuilder: (BuildContext context, int index) {
                             return Padding(
-                              padding: const EdgeInsets.only(left: 10, top: 5),
+                              padding: const EdgeInsets.only(right: 10, top: 5),
                               child: GestureDetector(
                                 onTap: () {
-                                  RecentSongsController.addRecentlyPlayed(
-                                      item.data);
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -192,27 +160,3 @@ class _HomeRecentsSongsState extends State<HomeRecentsSongs> {
     );
   }
 }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-              
-                    
-
-            
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// class Allsongs extends StatefulWidget {
-//   const Allsongs({super.key});
-
-//   @override
-//   State<Allsongs> createState() => _AllsongsState();
-// }
-
-// class _AllsongsState extends State<Allsongs> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container();
-//   }
-// }

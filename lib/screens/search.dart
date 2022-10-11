@@ -59,12 +59,10 @@ class _SearchScreenState extends State<SearchScreen> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: const Center(
-          child: Text(
-            'Search',
-            style:
-                TextStyle(fontSize: 36, color: Color.fromARGB(255, 5, 31, 53)),
-          ),
+        centerTitle: true,
+        title: Text(
+          'Search',
+          style: TextStyle(fontSize: 36, color: Color.fromARGB(255, 5, 31, 53)),
         ),
       ),
       backgroundColor: Colors.transparent,

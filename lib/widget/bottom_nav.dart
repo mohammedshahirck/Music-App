@@ -29,15 +29,6 @@ class _ScreenHomeState extends State<ScreenHome> {
     return Container(
       height: double.infinity,
       width: double.infinity,
-      // decoration: const BoxDecoration(
-      // gradient: LinearGradient(colors: [
-      //   Color.fromARGB(255, 156, 0, 78),
-      //   Color.fromARGB(255, 0, 0, 0)
-      // ], stops: [
-      //   0.5,
-      //   1
-      // ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
-      //   ),
       child: Scaffold(
         body: screens[index],
         backgroundColor: Colors.white,
@@ -52,11 +43,11 @@ class _ScreenHomeState extends State<ScreenHome> {
                     Column(
                       children: const [
                         MiniPlayer(),
-                        SizedBox(height: 10),
+                        // SizedBox(height: 10),
                       ],
                     )
                   else
-                    SizedBox(),
+                    const SizedBox(),
                   Column(
                     children: [
                       NavigationBarTheme(
@@ -75,7 +66,7 @@ class _ScreenHomeState extends State<ScreenHome> {
                               .onlyShowSelected,
                           selectedIndex: index,
                           backgroundColor: Colors.transparent,
-                          animationDuration: const Duration(seconds: 2),
+                          animationDuration: const Duration(seconds: 3),
                           onDestinationSelected: (index) =>
                               // setState(
                               //   () => this.index = index,

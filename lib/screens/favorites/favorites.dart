@@ -15,7 +15,6 @@ class Favorites extends StatefulWidget {
 class _FavoritesState extends State<Favorites> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 
@@ -71,8 +70,6 @@ class _FavoritesState extends State<Favorites> {
                                   itemBuilder: (ctx, index) {
                                     return ListTile(
                                       onTap: () {
-                                        RecentSongsController.addRecentlyPlayed(
-                                            FavoriteDB.favoriteSongs);
                                         MusicStore.player.stop();
                                         MusicStore.player.setAudioSource(
                                             MusicStore.createSongList(

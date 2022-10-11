@@ -1,5 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:musicplayer/database/favorite_db.dart';
 import 'package:musicplayer/database/recent_songs_db.dart';
 import 'package:musicplayer/screens/now_playing.dart';
@@ -16,6 +16,17 @@ class HomeLiked extends StatefulWidget {
 class _HomeLikedState extends State<HomeLiked> {
   static List<SongModel> homefavor = [];
   final OnAudioQuery _audioQuery = OnAudioQuery();
+  @override
+  void initState() {
+    super.initState();
+    initialize();
+    // setState(() {});
+  }
+
+  Future initialize() async {
+    await FavoriteDB.favoriteSongs;
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,19 +34,15 @@ class _HomeLikedState extends State<HomeLiked> {
       child: SizedBox(
         height: MediaQuery.of(context).size.height * 0.2,
         child: FutureBuilder(
-          builder: (context, item) {
+          builder: (context, items) {
             return ValueListenableBuilder(
               valueListenable: FavoriteDB.favoriteSongs,
               builder: (context, List<SongModel> favorData, Widget? child) {
                 if (favorData.isEmpty) {
-                  return const Center(
-                    child: Text(
-                      'No Song Played',
-                      style: TextStyle(fontSize: 15),
-                    ),
-                  );
+                  return Lottie.asset('assets/images/fav.json',
+                      height: 80, width: 80);
                 } else {
-                  final temp = favorData.toList();
+                  final temp = favorData.reversed.toList();
                   homefavor = temp.toSet().toList();
                   return FutureBuilder<List<SongModel>>(
                     future: _audioQuery.querySongs(
@@ -54,7 +61,7 @@ class _HomeLikedState extends State<HomeLiked> {
                       }
                       if (item.data!.isEmpty) {
                         return const Center(
-                          child: Text('No Songs Found'),
+                          child: Text(''),
                         );
                       }
                       return ListView.builder(
@@ -66,8 +73,6 @@ class _HomeLikedState extends State<HomeLiked> {
                             padding: const EdgeInsets.only(left: 10, top: 5),
                             child: GestureDetector(
                               onTap: () {
-                                RecentSongsController.addRecentlyPlayed(
-                                    FavoriteDB.favoriteSongs);
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(

@@ -19,7 +19,7 @@ class _AllMusicState extends State<AllMusic> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.transparent,
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -28,7 +28,7 @@ class _AllMusicState extends State<AllMusic> {
           'Music',
           style: TextStyle(
             fontSize: 30,
-            color: Color.fromARGB(255, 5, 31, 53),
+            color: Color.fromARGB(255, 5, 5, 5),
           ),
         ),
       ),

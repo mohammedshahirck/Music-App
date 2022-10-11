@@ -5,7 +5,7 @@ import 'package:musicplayer/database/favorite_db.dart';
 import 'package:musicplayer/database/recent_songs_db.dart';
 import 'package:musicplayer/screens/all_music.dart';
 import 'package:musicplayer/screens/favorites/home_liked.dart';
-import 'package:musicplayer/screens/home/home_function.dart';
+import 'package:musicplayer/screens/home/home_recents.dart';
 import 'package:musicplayer/screens/now_playing.dart';
 import 'package:musicplayer/screens/settings.dart';
 import 'package:musicplayer/widget/music_store.dart';
@@ -14,7 +14,6 @@ import 'package:permission_handler/permission_handler.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
-  static List<AlbumModel> album = [];
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -24,9 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     requestPermission();
-    init();
-
-    RecentSongsController.displayRecents();
+    //  init();
     super.initState();
   }
 
@@ -41,15 +38,6 @@ class _HomeScreenState extends State<HomeScreen> {
     Permission.storage.request();
   }
 
-  Future init() async {
-    // await Permission.storage.request();
-    const HomeScreen();
-    // await getAllPlaylist();
-    await RecentSongsController.displayRecents();
-    // await FavoriteDB.getAllSongs();
-    // const Favorites(song: ,);
-  }
-
   final OnAudioQuery _audioQuery = OnAudioQuery();
   @override
   Widget build(BuildContext context) {
@@ -58,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: ListView(
-          padding: EdgeInsets.only(left: 20),
+          padding: const EdgeInsets.only(left: 20),
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -225,7 +213,7 @@ class _HomeScreenState extends State<HomeScreen> {
               'Liked Songs',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-            HomeLiked(),
+            const HomeLiked(),
           ],
         ),
       ),

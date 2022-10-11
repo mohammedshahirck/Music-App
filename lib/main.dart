@@ -13,15 +13,16 @@ Future<void> main() async {
   }
   await Hive.openBox<int>('favoriteDB');
   await Hive.openBox<MusicPlayer>('playlistDB');
+  await Hive.openBox('recentsNotifier');
 
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
   await JustAudioBackground.init(
-    androidNotificationChannelId: 'com.ryanheise.bg_demo.channel.audio',
-    androidNotificationChannelName: 'Audio playback',
-    androidNotificationOngoing: true,
-  );
+      androidNotificationChannelId: 'com.ryanheise.bg_demo.channel.audio',
+      androidNotificationChannelName: 'Audio playback',
+      androidNotificationOngoing: true,
+      preloadArtwork: true);
 
   runApp(const MyApp());
 }
@@ -33,11 +34,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Music Player',
-      theme: ThemeData(
+      theme: ThemeData.light(
         useMaterial3: true,
-        // textTheme: GoogleFonts.abelTextTheme(Theme.of(context).textTheme),
       ),
-      /**/
       debugShowCheckedModeBanner: false,
       home: const SplashScreen(),
     );

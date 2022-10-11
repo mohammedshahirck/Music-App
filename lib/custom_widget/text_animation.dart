@@ -25,6 +25,7 @@ class AnimatedText extends StatelessWidget {
   final VoidCallback? onDone;
 
   const AnimatedText({
+    super.key,
     required this.text,
     this.style,
     this.textScaleFactor,

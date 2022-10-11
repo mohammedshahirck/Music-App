@@ -26,7 +26,7 @@ class _MiniPlayerState extends State<MiniPlayer> {
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
-      color: Color.fromARGB(255, 216, 231, 244),
+      color: const Color.fromARGB(255, 216, 231, 244),
       duration: const Duration(milliseconds: 500),
       curve: Curves.easeInOut,
       //height: MediaQuery.of(context).size.height * 0.2,
@@ -43,7 +43,7 @@ class _MiniPlayerState extends State<MiniPlayer> {
           );
         },
         iconColor: const Color.fromARGB(255, 180, 147, 147),
-        textColor: Color.fromARGB(255, 9, 9, 9),
+        textColor: const Color.fromARGB(255, 9, 9, 9),
         leading: Padding(
           padding: const EdgeInsets.all(0),
           child: Container(
@@ -86,24 +86,11 @@ class _MiniPlayerState extends State<MiniPlayer> {
           fit: BoxFit.fill,
           child: Row(
             children: [
-              // IconButton(
-              //     onPressed: () async {
-              //       if (MusicStore.player.hasPrevious) {
-              //         await MusicStore.player.seekToPrevious();
-              //         await MusicStore.player.play();
-              //       } else {
-              //         await MusicStore.player.play();
-              //       }
-              //     },
-              //     icon: const Icon(
-              //       Icons.skip_previous,
-              //       size: 35,
-              //     )),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   shape: const CircleBorder(),
-                  // primary: Colors.black,
-                  // onPrimary: Colors.green,
+                  backgroundColor: Colors.white,
+                  foregroundColor: Colors.black,
                 ),
                 onPressed: () async {
                   if (MusicStore.player.playing) {
@@ -120,12 +107,12 @@ class _MiniPlayerState extends State<MiniPlayer> {
                     bool? playingStage = snapshot.data;
                     if (playingStage != null && playingStage) {
                       return const Icon(
-                        Icons.pause_circle_outline,
+                        Icons.pause,
                         size: 35,
                       );
                     } else {
                       return const Icon(
-                        Icons.play_circle_outline,
+                        Icons.play_arrow,
                         size: 35,
                       );
                     }

@@ -35,7 +35,7 @@ class RecentSongsController {
         }
       }
     }
-    recentPlayed.reversed.toList();
+    // recentPlayed.reversed.toList();
     // recentsNotifier.notifyListeners();
   }
 }

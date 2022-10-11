@@ -1,8 +1,9 @@
-// ignore_for_file: non_constant_identifier_names
-
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:musicplayer/database/favorite_db.dart';
+import 'package:musicplayer/database/recent_songs_db.dart';
 import 'package:musicplayer/model/music_player_model.dart';
+import 'package:musicplayer/screens/splash.dart';
 
 class PlaylistDB {
   static ValueNotifier<List<MusicPlayer>> playlistNotifier = ValueNotifier([]);
@@ -25,5 +26,22 @@ class PlaylistDB {
 
     await PlayListDb.deleteAt(index);
     getAllPlaylist();
+  }
+
+  static Future<void> appReset(context) async {
+    final playListDb = Hive.box<MusicPlayer>('playlistDB');
+    final musicDb = Hive.box<int>('favoriteDB');
+    final dbBox = await Hive.openBox('recentsNotifier');
+
+    await musicDb.clear();
+    await playListDb.clear();
+    await dbBox.clear();
+    RecentSongsController.recentPlayed.clear();
+    FavoriteDB.favoriteSongs.value.clear();
+    Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(
+          builder: (context) => const SplashScreen(),
+        ),
+        (route) => false);
   }
 }

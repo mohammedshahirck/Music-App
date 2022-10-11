@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:musicplayer/database/favorite_db.dart';
@@ -14,11 +15,39 @@ class NowPlaying extends StatefulWidget {
 }
 
 class _NowPlayingState extends State<NowPlaying> {
-  Duration duration = const Duration();
   Duration position = const Duration();
+  Duration musicLength = const Duration();
 
   bool _isPlaying = true;
   int currentIndex = 0;
+
+  String time(Duration duration) {
+    String twodigits(int n) => n.toString().padLeft(2, '0');
+    final hours = twodigits(duration.inHours);
+    final minutes = twodigits(
+      duration.inMinutes.remainder(60),
+    );
+    final seconds = twodigits(
+      duration.inSeconds.remainder(60),
+    );
+
+    return [
+      if (duration.inHours > 0) hours,
+      minutes,
+      seconds,
+    ].join(":");
+  }
+
+  Widget slider() => Slider.adaptive(
+      thumbColor: Colors.blueGrey[900],
+      activeColor: Colors.blueGrey,
+      inactiveColor: Colors.blueGrey[200],
+      value: position.inSeconds.toDouble(),
+      max: musicLength.inSeconds.toDouble(),
+      onChanged: ((value) {
+        onchanged(value.toInt());
+        value = value;
+      }));
 
   @override
   void initState() {
@@ -30,19 +59,24 @@ class _NowPlayingState extends State<NowPlaying> {
       }
     });
     super.initState();
-    playSong();
+    playSongs();
   }
 
-  void playSong() {
-    MusicStore.player.durationStream.listen(
-      (d) {
+  void playSongs() {
+    MusicStore.player.durationStream.listen((Duration? d) {
+      try {
         if (mounted) {
+          if (d == null) {
+            return;
+          }
           setState(() {
-            duration = d!;
+            musicLength = d;
           });
         }
-      },
-    );
+      } catch (e) {
+        log(e.toString());
+      }
+    });
 
     MusicStore.player.positionStream.listen((p) {
       if (mounted) {
@@ -63,7 +97,10 @@ class _NowPlayingState extends State<NowPlaying> {
             Navigator.pop(context);
             FavoriteDB.favoriteSongs.notifyListeners();
           },
-          icon: const Icon(Icons.arrow_back_ios_new),
+          icon: const Icon(
+            Icons.keyboard_arrow_down_rounded,
+            size: 30,
+          ),
         ),
         // actions: const [],
       ),
@@ -137,33 +174,27 @@ class _NowPlayingState extends State<NowPlaying> {
                 : widget.playerSong[currentIndex].artist.toString(),
             style: const TextStyle(fontWeight: FontWeight.w600),
           ),
-          Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 8),
-                child: Text(position.toString().split(".")[0]),
-              ),
-              Expanded(
-                child: Slider(
-                  min: const Duration(microseconds: 0).inSeconds.toDouble(),
-                  value: position.inSeconds.toDouble(),
-                  max: duration.inSeconds.toDouble(),
-                  onChanged: (value) {
-                    setState(() {
-                      changeToSeconds(value.toInt());
-                      value = value;
-                    });
-                  },
-                  thumbColor: Colors.blueGrey[900],
-                  activeColor: Colors.blueGrey,
-                  inactiveColor: Colors.blueGrey[200],
+          slider(),
+          Padding(
+            padding: const EdgeInsets.only(left: 20, right: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  time(position),
+                  style: const TextStyle(
+                    color: Colors.black,
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: 8.0),
-                child: Text(duration.toString().split(".")[0]),
-              ),
-            ],
+                Text(
+                  time(musicLength - position),
+                  style: const TextStyle(
+                    color: Colors.black,
+                  ),
+                )
+              ],
+            ),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -322,7 +353,7 @@ class _NowPlayingState extends State<NowPlaying> {
     );
   }
 
-  void changeToSeconds(int seconds) {
+  void onchanged(int seconds) {
     Duration duration = Duration(seconds: seconds);
     MusicStore.player.seek(duration);
   }
