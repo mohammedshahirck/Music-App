@@ -197,31 +197,31 @@ class _NowPlayingState extends State<NowPlaying> {
               ],
             ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 20),
-                child: IconButton(
-                  alignment: Alignment.center,
-                  icon: const Icon(Icons.volume_up),
-                  color: Colors.black,
-                  onPressed: () {
-                    showSliderDialog(
-                      context: context,
-                      title: "Adjust volume",
-                      divisions: 10,
-                      min: 0,
-                      max: 1,
-                      value: MusicStore.player.volume,
-                      stream: MusicStore.player.volumeStream,
-                      onChanged: MusicStore.player.setVolume,
-                    );
-                  },
-                ),
-              ),
-            ],
-          ),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.start,
+          //   children: [
+          //     Padding(
+          //       padding: const EdgeInsets.only(left: 20),
+          //       child: IconButton(
+          //         alignment: Alignment.center,
+          //         icon: const Icon(Icons.volume_up),
+          //         color: Colors.black,
+          //         onPressed: () {
+          //           showSliderDialog(
+          //             context: context,
+          //             title: "Adjust volume",
+          //             divisions: 10,
+          //             min: 0,
+          //             max: 1,
+          //             value: MusicStore.player.volume,
+          //             stream: MusicStore.player.volumeStream,
+          //             onChanged: MusicStore.player.setVolume,
+          //           );
+          //         },
+          //       ),
+          //     ),
+          //   ],
+          // ),
           Padding(
             padding: const EdgeInsets.only(),
             child: Row(
@@ -351,54 +351,54 @@ class _NowPlayingState extends State<NowPlaying> {
   }
 }
 
-void showSliderDialog({
-  required BuildContext context,
-  required String title,
-  required int divisions,
-  required double min,
-  required double max,
-  String valueSuffix = '',
-  // TODO: Replace these two by ValueStream.
-  required double value,
-  required Stream<double> stream,
-  required ValueChanged<double> onChanged,
-}) {
-  showDialog<void>(
-    context: context,
-    builder: (context) => AlertDialog(
-      elevation: 0,
-      backgroundColor: Colors.transparent,
-      title: Text(
-        title,
-        textAlign: TextAlign.center,
-        style: const TextStyle(color: Colors.white),
-      ),
-      content: StreamBuilder<double>(
-        stream: stream,
-        builder: (context, snapshot) => SizedBox(
-          height: 100.0,
-          child: Column(
-            children: [
-              Text('${snapshot.data?.toStringAsFixed(1)}$valueSuffix',
-                  style: const TextStyle(
-                      color: Colors.white,
-                      fontFamily: 'Fixed',
-                      fontWeight: FontWeight.bold,
-                      fontSize: 24.0)),
-              Slider(
-                thumbColor: Colors.blueGrey[900],
-                activeColor: Colors.blueGrey,
-                inactiveColor: Colors.blueGrey[200],
-                divisions: divisions,
-                min: min,
-                max: max,
-                value: snapshot.data ?? value,
-                onChanged: onChanged,
-              ),
-            ],
-          ),
-        ),
-      ),
-    ),
-  );
-}
+// void showSliderDialog({
+//   required BuildContext context,
+//   required String title,
+//   required int divisions,
+//   required double min,
+//   required double max,
+//   String valueSuffix = '',
+//   // TODO: Replace these two by ValueStream.
+//   required double value,
+//   required Stream<double> stream,
+//   required ValueChanged<double> onChanged,
+// }) {
+//   showDialog<void>(
+//     context: context,
+//     builder: (context) => AlertDialog(
+//       elevation: 0,
+//       backgroundColor: Colors.transparent,
+//       title: Text(
+//         title,
+//         textAlign: TextAlign.center,
+//         style: const TextStyle(color: Colors.white),
+//       ),
+//       content: StreamBuilder<double>(
+//         stream: stream,
+//         builder: (context, snapshot) => SizedBox(
+//           height: 100.0,
+//           child: Column(
+//             children: [
+//               Text('${snapshot.data?.toStringAsFixed(1)}$valueSuffix',
+//                   style: const TextStyle(
+//                       color: Colors.white,
+//                       fontFamily: 'Fixed',
+//                       fontWeight: FontWeight.bold,
+//                       fontSize: 24.0)),
+//               Slider(
+//                 thumbColor: Colors.blueGrey[900],
+//                 activeColor: Colors.blueGrey,
+//                 inactiveColor: Colors.blueGrey[200],
+//                 divisions: divisions,
+//                 min: min,
+//                 max: max,
+//                 value: snapshot.data ?? value,
+//                 onChanged: onChanged,
+//               ),
+//             ],
+//           ),
+//         ),
+//       ),
+//     ),
+//   );
+// }
