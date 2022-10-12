@@ -21,6 +21,20 @@ class _NowPlayingState extends State<NowPlaying> {
   bool _isPlaying = true;
   int currentIndex = 0;
 
+  @override
+  void initState() {
+    MusicStore.player.currentIndexStream.listen((index) {
+      if (index != null && mounted) {
+        setState(() {
+          currentIndex = index;
+        });
+        MusicStore.currentIndes = index;
+      }
+    });
+    playSongs();
+    super.initState();
+  }
+
   String time(Duration duration) {
     String twodigits(int n) => n.toString().padLeft(2, '0');
     final hours = twodigits(duration.inHours);
@@ -48,19 +62,6 @@ class _NowPlayingState extends State<NowPlaying> {
         onchanged(value.toInt());
         value = value;
       }));
-
-  @override
-  void initState() {
-    MusicStore.player.currentIndexStream.listen((index) {
-      if (index != null && mounted) {
-        setState(() {
-          currentIndex = index;
-        });
-      }
-    });
-    super.initState();
-    playSongs();
-  }
 
   void playSongs() {
     MusicStore.player.durationStream.listen((Duration? d) {
@@ -224,6 +225,7 @@ class _NowPlayingState extends State<NowPlaying> {
           Padding(
             padding: const EdgeInsets.only(),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 ElevatedButton(
                     style: ElevatedButton.styleFrom(elevation: 0),
@@ -251,7 +253,7 @@ class _NowPlayingState extends State<NowPlaying> {
                         }
                       },
                     )),
-                RawMaterialButton(
+                IconButton(
                   onPressed: () async {
                     if (MusicStore.player.hasPrevious) {
                       _isPlaying = true;
@@ -261,13 +263,8 @@ class _NowPlayingState extends State<NowPlaying> {
                       await MusicStore.player.play();
                     }
                   },
-                  elevation: 5.0,
-                  fillColor: Colors.blueGrey[300],
-                  padding: const EdgeInsets.all(15.0),
-                  shape: const CircleBorder(),
-                  child: const Icon(
+                  icon: const Icon(
                     Icons.skip_previous_sharp,
-                    size: 20.0,
                   ),
                 ),
                 RawMaterialButton(
@@ -303,7 +300,7 @@ class _NowPlayingState extends State<NowPlaying> {
                     },
                   ),
                 ),
-                RawMaterialButton(
+                IconButton(
                   onPressed: () async {
                     if (MusicStore.player.hasNext) {
                       _isPlaying = true;
@@ -313,13 +310,8 @@ class _NowPlayingState extends State<NowPlaying> {
                       await MusicStore.player.play();
                     }
                   },
-                  elevation: 2.0,
-                  fillColor: Colors.blueGrey[300],
-                  padding: const EdgeInsets.all(15.0),
-                  shape: const CircleBorder(),
-                  child: const Icon(
+                  icon: const Icon(
                     Icons.skip_next,
-                    size: 20,
                   ),
                 ),
                 ElevatedButton(

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:musicplayer/database/favorite_db.dart';
-import 'package:musicplayer/database/recent_songs_db.dart';
 import 'package:musicplayer/screens/now_playing.dart';
 import 'package:musicplayer/widget/music_store.dart';
 import 'package:on_audio_query/on_audio_query.dart';
@@ -18,9 +17,9 @@ class _HomeLikedState extends State<HomeLiked> {
   final OnAudioQuery _audioQuery = OnAudioQuery();
   @override
   void initState() {
-    super.initState();
     initialize();
-    // setState(() {});
+    super.initState();
+    setState(() {});
   }
 
   Future initialize() async {
@@ -73,6 +72,12 @@ class _HomeLikedState extends State<HomeLiked> {
                             padding: const EdgeInsets.only(left: 10, top: 5),
                             child: GestureDetector(
                               onTap: () {
+                                // MusicStore.player.stop();
+                                MusicStore.player.setAudioSource(
+                                    MusicStore.createSongList(homefavor),
+                                    initialIndex: index);
+                                MusicStore.player.play();
+
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -81,11 +86,6 @@ class _HomeLikedState extends State<HomeLiked> {
                                     ),
                                   ),
                                 );
-                                MusicStore.player.stop();
-                                MusicStore.player.setAudioSource(
-                                    MusicStore.createSongList(homefavor),
-                                    initialIndex: index);
-                                MusicStore.player.play();
                               },
                               child: Column(
                                 children: [

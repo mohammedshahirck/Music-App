@@ -4,7 +4,7 @@ import 'package:on_audio_query/on_audio_query.dart';
 
 class MusicStore {
   static AudioPlayer player = AudioPlayer();
-  int currentIndes = -1;
+  static int currentIndes = -1;
   static List<SongModel> songCopy = [];
   static List<SongModel> playingSong = [];
   static ConcatenatingAudioSource createSongList(List<SongModel> songs) {

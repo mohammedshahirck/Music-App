@@ -14,6 +14,7 @@ import 'package:permission_handler/permission_handler.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+  static List<SongModel> song = [];
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -23,7 +24,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     requestPermission();
-    //  init();
     super.initState();
   }
 
@@ -35,6 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
       }
       setState(() {});
     }
+
     Permission.storage.request();
   }
 
@@ -147,7 +148,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     width: MediaQuery.of(context).size.width *
                                         0.35,
                                     height: MediaQuery.of(context).size.height *
-                                        0.10,
+                                        0.16,
                                     decoration: BoxDecoration(
                                       gradient: const LinearGradient(
                                         colors: [
@@ -171,7 +172,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                   ),
                                   artworkWidth:
-                                      MediaQuery.of(context).size.width * 0.34,
+                                      MediaQuery.of(context).size.width * 0.35,
                                   artworkHeight:
                                       MediaQuery.of(context).size.height * 0.16,
                                 ),
@@ -197,7 +198,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       autoPlayCurve: Curves.easeInQuint,
                       enlargeCenterPage: true,
                     ),
-                    itemCount: 10,
+                    itemCount: item.data!.length,
                   );
                   // });
                   // SizedBox(

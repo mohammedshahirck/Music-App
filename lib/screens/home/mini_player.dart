@@ -59,7 +59,24 @@ class _MiniPlayerState extends State<MiniPlayer> {
                 artworkQuality: FilterQuality.high,
                 artworkFit: BoxFit.fill,
                 artworkBorder: BorderRadius.circular(30),
-                nullArtworkWidget: Lottie.asset('assets/mini.json'),
+                nullArtworkWidget: CircleAvatar(
+                  child: Container(
+                    height: MediaQuery.of(context).size.height * 0.35,
+                    width: MediaQuery.of(context).size.width * 0.15,
+                    decoration: BoxDecoration(
+                      gradient: const LinearGradient(
+                        colors: [Colors.blueGrey, Colors.white, Colors.black],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Icon(
+                      Icons.music_note_rounded,
+                      color: Colors.blueGrey[600],
+                    ),
+                  ),
+                ),
                 id: MusicStore.playingSong[MusicStore.player.currentIndex!].id,
                 type: ArtworkType.AUDIO,
               ),

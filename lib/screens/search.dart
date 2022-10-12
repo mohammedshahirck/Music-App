@@ -104,24 +104,29 @@ class _SearchScreenState extends State<SearchScreen> {
                           leading: QueryArtworkWidget(
                             id: _getedSongs[index].id,
                             type: ArtworkType.AUDIO,
-                            nullArtworkWidget: Container(
-                              height: MediaQuery.of(context).size.height * 0.35,
-                              width: MediaQuery.of(context).size.width * 0.15,
-                              decoration: BoxDecoration(
-                                gradient: const LinearGradient(
-                                  colors: [
-                                    Colors.blueGrey,
-                                    Colors.white,
-                                    Colors.black
-                                  ],
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
+                            nullArtworkWidget: CircleAvatar(
+                              backgroundColor: Colors.blue,
+                              radius: 25,
+                              child: Container(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.10,
+                                width: MediaQuery.of(context).size.width * 0.16,
+                                decoration: BoxDecoration(
+                                  gradient: const LinearGradient(
+                                    colors: [
+                                      Colors.blueGrey,
+                                      Colors.white,
+                                      Colors.black
+                                    ],
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                  ),
+                                  borderRadius: BorderRadius.circular(40),
                                 ),
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: Icon(
-                                Icons.music_note_rounded,
-                                color: Colors.blueGrey[600],
+                                child: Icon(
+                                  Icons.music_note_rounded,
+                                  color: Colors.blueGrey[600],
+                                ),
                               ),
                             ),
                           ),

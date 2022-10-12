@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:musicplayer/database/favorite_db.dart';
 import 'package:musicplayer/database/recent_songs_db.dart';
 import 'package:musicplayer/screens/now_playing.dart';
 import 'package:musicplayer/widget/music_store.dart';
@@ -23,12 +24,14 @@ class _HomeRecentsSongsState extends State<HomeRecentsSongs> {
   }
 
   Future init() async {
-    await RecentSongsController.recentPlayed;
+    await RecentSongsController.getRecentSongs();
+
     setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
+    FavoriteDB.favoriteSongs;
     return Center(
       child: SizedBox(
         height: MediaQuery.of(context).size.height * 0.2,
@@ -75,6 +78,12 @@ class _HomeRecentsSongsState extends State<HomeRecentsSongs> {
                               padding: const EdgeInsets.only(right: 10, top: 5),
                               child: GestureDetector(
                                 onTap: () {
+                                  // MusicStore.player.stop();
+                                  MusicStore.player.setAudioSource(
+                                      MusicStore.createSongList(removedup),
+                                      initialIndex: index);
+                                  MusicStore.player.play();
+
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -83,12 +92,6 @@ class _HomeRecentsSongsState extends State<HomeRecentsSongs> {
                                       ),
                                     ),
                                   );
-
-                                  MusicStore.player.stop();
-                                  MusicStore.player.setAudioSource(
-                                      MusicStore.createSongList(removedup),
-                                      initialIndex: index);
-                                  MusicStore.player.play();
                                 },
                                 child: Column(
                                   children: [
