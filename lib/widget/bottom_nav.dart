@@ -26,7 +26,7 @@ class _ScreenHomeState extends State<ScreenHome> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: double.infinity,
       width: double.infinity,
       child: Scaffold(
@@ -34,21 +34,29 @@ class _ScreenHomeState extends State<ScreenHome> {
         backgroundColor: Colors.white,
         bottomNavigationBar: ValueListenableBuilder(
             valueListenable: FavoriteDB.favoriteSongs,
-            builder:
-                (BuildContext context, List<SongModel> music, Widget? child) {
+            builder: (BuildContext context, List<SongModel> favordata,
+                Widget? child) {
               return SingleChildScrollView(
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     if (MusicStore.player.currentIndex != null)
                       Column(
                         children: const [
                           MiniPlayer(),
-                          // SizedBox(height: 10),
+                          SizedBox(
+                            height: 10,
+                          ),
                         ],
                       )
                     else
                       const SizedBox(),
+
+                    // (MusicStore.player.playing) ||
+                    //         (MusicStore.player.currentIndex != null)
+                    //     ? const MiniPlayer()
+                    //     : const SizedBox(),
                     Column(
                       children: [
                         NavigationBarTheme(

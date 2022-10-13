@@ -64,12 +64,14 @@ class _AllMusicState extends State<AllMusic> {
                       Widget? child) {
                     return ListTile(
                       leading: QueryArtworkWidget(
-                          id: item.data![index].id,
-                          type: ArtworkType.AUDIO,
-                          artworkFit: BoxFit.fill,
-                          nullArtworkWidget: Container(
-                            height: MediaQuery.of(context).size.height * 0.35,
-                            width: MediaQuery.of(context).size.width * 0.15,
+                        id: item.data![index].id,
+                        type: ArtworkType.AUDIO,
+                        artworkFit: BoxFit.fill,
+                        nullArtworkWidget: CircleAvatar(
+                          radius: 25,
+                          child: Container(
+                            height: MediaQuery.of(context).size.height * 0.10,
+                            width: MediaQuery.of(context).size.width * 0.16,
                             decoration: BoxDecoration(
                               gradient: const LinearGradient(
                                 colors: [
@@ -80,13 +82,15 @@ class _AllMusicState extends State<AllMusic> {
                                 begin: Alignment.topLeft,
                                 end: Alignment.bottomRight,
                               ),
-                              borderRadius: BorderRadius.circular(20),
+                              borderRadius: BorderRadius.circular(40),
                             ),
                             child: Icon(
                               Icons.music_note_rounded,
                               color: Colors.blueGrey[600],
                             ),
-                          )),
+                          ),
+                        ),
+                      ),
                       title: Text(
                         item.data![index].title,
                         maxLines: 1,
@@ -108,7 +112,7 @@ class _AllMusicState extends State<AllMusic> {
                         );
                         MusicStore.player.play();
                         RecentSongsController.addRecentlyPlayed(
-                            AllMusic.song[index].id);
+                            item.data![index].id);
 
                         Navigator.push(
                           context,

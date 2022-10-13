@@ -7,7 +7,7 @@ import 'package:musicplayer/screens/all_music.dart';
 import 'package:musicplayer/screens/favorites/home_liked.dart';
 import 'package:musicplayer/screens/home/home_recents.dart';
 import 'package:musicplayer/screens/now_playing.dart';
-import 'package:musicplayer/screens/settings.dart';
+import 'package:musicplayer/screens/setting/settings.dart';
 import 'package:musicplayer/widget/music_store.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -43,38 +43,42 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: const Color.fromRGBO(0, 0, 0, 0),
       backgroundColor: Colors.white,
       body: SafeArea(
         child: ListView(
-          padding: const EdgeInsets.only(left: 20),
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(right: 5, top: 5),
+                  padding: const EdgeInsets.only(top: 5),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Image(
-                        image:
-                            const AssetImage('assets/images/apple-music.png'),
-                        height: MediaQuery.of(context).size.height * .12,
-                        width: MediaQuery.of(context).size.width * .12,
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20),
+                        child: Image(
+                          image:
+                              const AssetImage('assets/images/apple-music.png'),
+                          height: MediaQuery.of(context).size.height * .12,
+                          width: MediaQuery.of(context).size.width * .12,
+                        ),
                       ),
-                      IconButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) {
-                                return const Settings();
-                              },
-                            ),
-                          );
-                        },
-                        icon: const Icon(Icons.settings_outlined),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 20),
+                        child: IconButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return const SettingScreen();
+                                },
+                              ),
+                            );
+                          },
+                          icon: const Icon(Icons.settings_outlined),
+                        ),
                       ),
                     ],
                   ),
@@ -111,8 +115,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   MusicStore.songCopy = item.data!;
 
                   return CarouselSlider.builder(
-                    itemBuilder: (BuildContext context, int itemIndex,
-                        int pageViewIndex) {
+                    itemBuilder:
+                        (BuildContext context, int index, int pageViewIndex) {
                       return ValueListenableBuilder(
                         valueListenable: RecentSongsController.recentsNotifier,
                         builder: (BuildContext context,
@@ -121,11 +125,11 @@ class _HomeScreenState extends State<HomeScreen> {
                             onTap: () {
                               MusicStore.player.setAudioSource(
                                 MusicStore.createSongList(item.data!),
-                                initialIndex: itemIndex,
+                                initialIndex: index,
                               );
                               MusicStore.player.play();
                               RecentSongsController.addRecentlyPlayed(
-                                  item.data![itemIndex].id);
+                                  item.data![index].id);
 
                               Navigator.push(
                                 context,
@@ -141,7 +145,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   quality: 100,
                                   artworkQuality: FilterQuality.high,
                                   size: 2000,
-                                  id: item.data![itemIndex].id,
+                                  id: item.data![index].id,
                                   type: ArtworkType.AUDIO,
                                   artworkFit: BoxFit.fill,
                                   nullArtworkWidget: Container(
@@ -177,7 +181,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       MediaQuery.of(context).size.height * 0.16,
                                 ),
                                 Text(
-                                  item.data![itemIndex].title,
+                                  item.data![index].title,
                                   style: const TextStyle(),
                                   maxLines: 1,
                                   overflow: TextOverflow.clip,
@@ -205,14 +209,20 @@ class _HomeScreenState extends State<HomeScreen> {
                   //   height: 10,
                   // );
                 }),
-            const Text(
-              'Recents',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            const Padding(
+              padding: EdgeInsets.only(left: 20),
+              child: Text(
+                'Recents',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
             ),
             const HomeRecentsSongs(),
-            const Text(
-              'Liked Songs',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            const Padding(
+              padding: EdgeInsets.only(left: 20),
+              child: Text(
+                'Liked Songs',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
             ),
             const HomeLiked(),
           ],

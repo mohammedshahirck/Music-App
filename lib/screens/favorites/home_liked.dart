@@ -83,8 +83,7 @@ class _HomeLikedState extends State<HomeLiked> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => NowPlaying(
-                                      playerSong: homefavor,
-                                    ),
+                                        playerSong: MusicStore.playingSong),
                                   ),
                                 );
                               },
@@ -110,7 +109,7 @@ class _HomeLikedState extends State<HomeLiked> {
                                           begin: Alignment.topLeft,
                                           end: Alignment.bottomRight,
                                         ),
-                                        borderRadius: BorderRadius.circular(30),
+                                        borderRadius: BorderRadius.circular(20),
                                       ),
                                       child: Icon(
                                         Icons.music_note_rounded,

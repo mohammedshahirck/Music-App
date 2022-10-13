@@ -89,7 +89,7 @@ class _FavoritesState extends State<Favorites> {
                                       Navigator.of(context).push(
                                         MaterialPageRoute(builder: (ctx) {
                                           return NowPlaying(
-                                            playerSong: newlist,
+                                            playerSong: MusicStore.playingSong,
                                           );
                                         }),
                                       );
@@ -98,28 +98,32 @@ class _FavoritesState extends State<Favorites> {
                                       id: favorData[index].id,
                                       type: ArtworkType.AUDIO,
                                       nullArtworkWidget: CircleAvatar(
-                                        backgroundColor: Colors.black,
-                                        radius: MediaQuery.of(context)
-                                                .size
-                                                .aspectRatio *
-                                            60,
-                                        child: CircleAvatar(
-                                          backgroundColor: Colors.grey[300],
-                                          radius: MediaQuery.of(context)
+                                        radius: 25,
+                                        child: Container(
+                                          height: MediaQuery.of(context)
                                                   .size
-                                                  .aspectRatio *
-                                              40,
-                                          child: CircleAvatar(
-                                            backgroundColor: Colors.black,
-                                            radius: MediaQuery.of(context)
-                                                    .size
-                                                    .aspectRatio *
-                                                90,
-                                            child: Icon(
-                                              Icons.music_note_rounded,
-                                              size: 60,
-                                              color: Colors.grey[300],
+                                                  .height *
+                                              0.10,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.16,
+                                          decoration: BoxDecoration(
+                                            gradient: const LinearGradient(
+                                              colors: [
+                                                Colors.blueGrey,
+                                                Colors.white,
+                                                Colors.black
+                                              ],
+                                              begin: Alignment.topLeft,
+                                              end: Alignment.bottomRight,
                                             ),
+                                            borderRadius:
+                                                BorderRadius.circular(40),
+                                          ),
+                                          child: Icon(
+                                            Icons.music_note_rounded,
+                                            color: Colors.blueGrey[600],
                                           ),
                                         ),
                                       ),

@@ -71,6 +71,7 @@ class _HomeRecentsSongsState extends State<HomeRecentsSongs> {
                           );
                         }
                         return ListView.builder(
+                          padding: EdgeInsets.only(left: 10),
                           scrollDirection: Axis.horizontal,
                           itemCount:
                               removedup.length > 10 ? 10 : removedup.length,
@@ -79,10 +80,10 @@ class _HomeRecentsSongsState extends State<HomeRecentsSongs> {
                               padding: const EdgeInsets.only(right: 10, top: 5),
                               child: GestureDetector(
                                 onTap: () {
-                                  // MusicStore.player.stop();
                                   MusicStore.player.setAudioSource(
                                       MusicStore.createSongList(removedup),
                                       initialIndex: index);
+
                                   MusicStore.player.play();
 
                                   Navigator.push(
@@ -93,6 +94,7 @@ class _HomeRecentsSongsState extends State<HomeRecentsSongs> {
                                       ),
                                     ),
                                   );
+                                  // MusicStore.player.stop();
                                 },
                                 child: Column(
                                   children: [
