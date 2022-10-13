@@ -122,7 +122,8 @@ class _NowPlayingState extends State<NowPlaying> {
               artworkFit: BoxFit.fill,
               keepOldArtwork: true,
               artworkBorder: BorderRadius.circular(20),
-              id: widget.playerSong[currentIndex].id,
+              id: MusicStore.playingSong[currentIndex].id,
+              // widget.playerSong[currentIndex].id,
               type: ArtworkType.AUDIO,
               nullArtworkWidget: SizedBox(
                 height: MediaQuery.of(context).size.height * 0.4,

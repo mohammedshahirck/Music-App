@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:musicplayer/database/favorite_db.dart';
-import 'package:musicplayer/screens/all_music.dart';
 import 'package:musicplayer/screens/now_playing.dart';
 import 'package:musicplayer/widget/music_store.dart';
 import 'package:on_audio_query/on_audio_query.dart';
@@ -73,9 +72,9 @@ class _HomeLikedState extends State<HomeLiked> {
                             padding: const EdgeInsets.only(left: 10, top: 5),
                             child: GestureDetector(
                               onTap: () {
-                                List<SongModel> hnewlist = [...homefavor];
+                                //List<SongModel> hnewlist = [...homefavor];
                                 MusicStore.player.setAudioSource(
-                                    MusicStore.createSongList(hnewlist),
+                                    MusicStore.createSongList(homefavor),
                                     initialIndex: index);
                                 // MusicStore.player.stop();
                                 MusicStore.player.play();
@@ -84,7 +83,7 @@ class _HomeLikedState extends State<HomeLiked> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => NowPlaying(
-                                      playerSong: hnewlist,
+                                      playerSong: homefavor,
                                     ),
                                   ),
                                 );

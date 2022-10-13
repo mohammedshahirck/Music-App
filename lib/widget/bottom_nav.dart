@@ -36,92 +36,94 @@ class _ScreenHomeState extends State<ScreenHome> {
             valueListenable: FavoriteDB.favoriteSongs,
             builder:
                 (BuildContext context, List<SongModel> music, Widget? child) {
-              return Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  if (MusicStore.player.currentIndex != null)
+              return SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (MusicStore.player.currentIndex != null)
+                      Column(
+                        children: const [
+                          MiniPlayer(),
+                          // SizedBox(height: 10),
+                        ],
+                      )
+                    else
+                      const SizedBox(),
                     Column(
-                      children: const [
-                        MiniPlayer(),
-                        // SizedBox(height: 10),
-                      ],
-                    )
-                  else
-                    const SizedBox(),
-                  Column(
-                    children: [
-                      NavigationBarTheme(
-                        data: NavigationBarThemeData(
-                          indicatorColor: Colors.blueGrey[800],
-                          backgroundColor: Colors.transparent,
-                          labelTextStyle: MaterialStateProperty.all(
-                            const TextStyle(
-                                fontSize: 14, fontWeight: FontWeight.w500),
+                      children: [
+                        NavigationBarTheme(
+                          data: NavigationBarThemeData(
+                            indicatorColor: Colors.blueGrey[800],
+                            backgroundColor: Colors.transparent,
+                            labelTextStyle: MaterialStateProperty.all(
+                              const TextStyle(
+                                  fontSize: 14, fontWeight: FontWeight.w500),
+                            ),
+                          ),
+                          child: NavigationBar(
+                            elevation: 0,
+                            height: 75,
+                            labelBehavior: NavigationDestinationLabelBehavior
+                                .onlyShowSelected,
+                            selectedIndex: index,
+                            backgroundColor: Colors.transparent,
+                            animationDuration: const Duration(seconds: 3),
+                            onDestinationSelected: (index) =>
+                                // setState(
+                                //   () => this.index = index,
+                                // ),
+                                setState(() {
+                              this.index = index;
+                              FavoriteDB.favoriteSongs.notifyListeners();
+                            }),
+                            destinations: const [
+                              NavigationDestination(
+                                icon: Icon(
+                                  Icons.home_outlined,
+                                ),
+                                selectedIcon: Icon(
+                                  Icons.home,
+                                  color: Color.fromARGB(255, 221, 221, 221),
+                                ),
+                                label: 'Home',
+                              ),
+                              NavigationDestination(
+                                icon: Icon(
+                                  Icons.album_outlined,
+                                ),
+                                selectedIcon: Icon(
+                                  Icons.album,
+                                  color: Color.fromARGB(255, 221, 221, 221),
+                                ),
+                                label: 'Musics',
+                              ),
+                              NavigationDestination(
+                                icon: Icon(
+                                  Icons.search_outlined,
+                                ),
+                                selectedIcon: Icon(
+                                  Icons.search,
+                                  color: Color.fromARGB(255, 221, 221, 221),
+                                ),
+                                label: 'Search',
+                              ),
+                              NavigationDestination(
+                                icon: Icon(
+                                  Icons.playlist_play,
+                                ),
+                                selectedIcon: Icon(
+                                  Icons.playlist_play_outlined,
+                                  color: Color.fromARGB(255, 221, 221, 221),
+                                ),
+                                label: 'Playlist',
+                              ),
+                            ],
                           ),
                         ),
-                        child: NavigationBar(
-                          elevation: 0,
-                          height: 75,
-                          labelBehavior: NavigationDestinationLabelBehavior
-                              .onlyShowSelected,
-                          selectedIndex: index,
-                          backgroundColor: Colors.transparent,
-                          animationDuration: const Duration(seconds: 3),
-                          onDestinationSelected: (index) =>
-                              // setState(
-                              //   () => this.index = index,
-                              // ),
-                              setState(() {
-                            this.index = index;
-                            FavoriteDB.favoriteSongs.notifyListeners();
-                          }),
-                          destinations: const [
-                            NavigationDestination(
-                              icon: Icon(
-                                Icons.home_outlined,
-                              ),
-                              selectedIcon: Icon(
-                                Icons.home,
-                                color: Color.fromARGB(255, 221, 221, 221),
-                              ),
-                              label: 'Home',
-                            ),
-                            NavigationDestination(
-                              icon: Icon(
-                                Icons.album_outlined,
-                              ),
-                              selectedIcon: Icon(
-                                Icons.album,
-                                color: Color.fromARGB(255, 221, 221, 221),
-                              ),
-                              label: 'Musics',
-                            ),
-                            NavigationDestination(
-                              icon: Icon(
-                                Icons.search_outlined,
-                              ),
-                              selectedIcon: Icon(
-                                Icons.search,
-                                color: Color.fromARGB(255, 221, 221, 221),
-                              ),
-                              label: 'Search',
-                            ),
-                            NavigationDestination(
-                              icon: Icon(
-                                Icons.playlist_play,
-                              ),
-                              selectedIcon: Icon(
-                                Icons.playlist_play_outlined,
-                                color: Color.fromARGB(255, 221, 221, 221),
-                              ),
-                              label: 'Playlist',
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+                      ],
+                    ),
+                  ],
+                ),
               );
             }),
       ),

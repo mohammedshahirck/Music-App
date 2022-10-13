@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 import 'package:musicplayer/custom_widget/text_animation.dart';
 import 'package:musicplayer/screens/now_playing.dart';
 import 'package:musicplayer/widget/music_store.dart';
