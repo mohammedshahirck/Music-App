@@ -90,7 +90,7 @@ class _HomeRecentsSongsState extends State<HomeRecentsSongs> {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) => NowPlaying(
-                                        playerSong: removedup,
+                                        playerSong: MusicStore.playingSong,
                                       ),
                                     ),
                                   );

@@ -28,9 +28,10 @@ class _MiniPlayerState extends State<MiniPlayer> {
       color: const Color.fromARGB(255, 216, 231, 244),
       duration: const Duration(milliseconds: 500),
       curve: Curves.easeInOut,
-      //height: MediaQuery.of(context).size.height * 0.2,
+      height: MediaQuery.of(context).size.height * 0.08,
       width: double.infinity,
-      height: 70,
+
+      ///height: 70,
       child: ListTile(
         onTap: () {
           Navigator.of(context).push(

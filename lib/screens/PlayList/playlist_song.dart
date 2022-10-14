@@ -67,7 +67,8 @@ class _PlaylistDataState extends State<PlaylistData> {
                           MusicStore.player.play();
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (ctx) => NowPlaying(
-                                    playerSong: playlistsong,
+                                    playerSong: MusicStore.playingSong,
+                                    //playlistsong,
                                   )));
                         },
                         leading: QueryArtworkWidget(

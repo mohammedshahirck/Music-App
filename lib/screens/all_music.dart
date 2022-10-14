@@ -19,7 +19,7 @@ class _AllMusicState extends State<AllMusic> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.transparent,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -118,7 +118,8 @@ class _AllMusicState extends State<AllMusic> {
                           context,
                           MaterialPageRoute(
                             builder: (context) => NowPlaying(
-                              playerSong: item.data!,
+                              playerSong: MusicStore.playingSong,
+                              //item.data!,
                             ),
                           ),
                         );
