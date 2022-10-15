@@ -41,10 +41,10 @@ class _ScreenHomeState extends State<ScreenHome> {
                   if (MusicStore.player.currentIndex != null)
                     Column(
                       children: const [
-                        //MiniPlayer(),
-                        // SizedBox(
-                        //   height: 10,
-                        // ),
+                        MiniPlayer(),
+                        SizedBox(
+                          height: 10,
+                        ),
                       ],
                     )
                   else

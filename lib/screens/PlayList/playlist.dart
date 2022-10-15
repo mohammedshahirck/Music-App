@@ -175,8 +175,9 @@ class _PlayListState extends State<PlayList> {
               ),
             ),
             floatingActionButton: FloatingActionButton.extended(
-              label: Text('Add'),
-              icon: Icon(Icons.playlist_add),
+              backgroundColor: Colors.blueGrey[800],
+              label: const Text('Add'),
+              icon: const Icon(Icons.playlist_add),
               onPressed: () {
                 showModalBottomSheet(
                   elevation: 5,
@@ -267,6 +268,7 @@ class _PlayListState extends State<PlayList> {
 
   Future<void> buttonClicked() async {
     final name = nameController.text.trim();
+
     if (name.isEmpty) {
       return;
     } else {

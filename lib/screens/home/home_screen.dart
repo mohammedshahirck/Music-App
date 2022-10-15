@@ -153,7 +153,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 artworkFit: BoxFit.fill,
                                 nullArtworkWidget: Container(
                                   width:
-                                      MediaQuery.of(context).size.width * 0.35,
+                                      MediaQuery.of(context).size.width * 0.25,
                                   height:
                                       MediaQuery.of(context).size.height * 0.16,
                                   decoration: BoxDecoration(
@@ -179,7 +179,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                 ),
                                 artworkWidth:
-                                    MediaQuery.of(context).size.width * 0.35,
+                                    MediaQuery.of(context).size.width * 0.25,
                                 artworkHeight:
                                     MediaQuery.of(context).size.height * 0.16,
                               ),
@@ -221,7 +221,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           const HomeRecentsSongs(),
           const Padding(
-            padding: EdgeInsets.only(left: 20),
+            padding: EdgeInsets.only(top: 10, left: 20),
             child: Text(
               'Liked Songs',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
